@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hblog.mapper.UserinfoMapper">
+  <resultMap id="BaseResultMap" type="com.hblog.bean.Userinfo">
+    <id column="userinfo_id" jdbcType="INTEGER" property="userinfoId" />
+    <result column="userinfo_sex" jdbcType="CHAR" property="userinfoSex" />
+    <result column="userinfo_age" jdbcType="CHAR" property="userinfoAge" />
+    <result column="userinfo_height" jdbcType="CHAR" property="userinfoHeight" />
+    <result column="userinfo_weight" jdbcType="CHAR" property="userinfoWeight" />
+    <result column="userinfo_sex_choice" jdbcType="CHAR" property="userinfoSexChoice" />
+    <result column="userinfo_marriage_state" jdbcType="CHAR" property="userinfoMarriageState" />
+    <result column="userinfo_education" jdbcType="CHAR" property="userinfoEducation" />
+    <result column="userinfo_often_place" jdbcType="VARCHAR" property="userinfoOftenPlace" />
+    <result column="userinfo_real_name" jdbcType="CHAR" property="userinfoRealName" />
+    <result column="userinfo_ID_number" jdbcType="CHAR" property="userinfoIdNumber" />
+    <result column="userinfo_qq" jdbcType="CHAR" property="userinfoQq" />
+    <result column="userinfo_wechat" jdbcType="CHAR" property="userinfoWechat" />
+    <result column="userinfo_microblog" jdbcType="CHAR" property="userinfoMicroblog" />
+    <result column="userinfo_constellation" jdbcType="CHAR" property="userinfoConstellation" />
+    <result column="userinfo_Blood_type" jdbcType="CHAR" property="userinfoBloodType" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="userinfo_mode" jdbcType="CHAR" property="userinfoMode" />
+    <result column="user_headimage_src" jdbcType="VARCHAR" property="userHeadimageSrc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userinfo_id, userinfo_sex, userinfo_age, userinfo_height, userinfo_weight, userinfo_sex_choice, 
+    userinfo_marriage_state, userinfo_education, userinfo_often_place, userinfo_real_name, 
+    userinfo_ID_number, userinfo_qq, userinfo_wechat, userinfo_microblog, userinfo_constellation, 
+    userinfo_Blood_type, user_id, userinfo_mode, user_headimage_src
+  </sql>
+  <select id="selectByExample" parameterType="com.hblog.bean.UserinfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where userinfo_id = #{userinfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from userinfo
+    where userinfo_id = #{userinfoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hblog.bean.UserinfoExample">
+    delete from userinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hblog.bean.Userinfo">
+    insert into userinfo (userinfo_id, userinfo_sex, userinfo_age, 
+      userinfo_height, userinfo_weight, userinfo_sex_choice, 
+      userinfo_marriage_state, userinfo_education, userinfo_often_place, 
+      userinfo_real_name, userinfo_ID_number, userinfo_qq, 
+      userinfo_wechat, userinfo_microblog, userinfo_constellation, 
+      userinfo_Blood_type, user_id, userinfo_mode, 
+      user_headimage_src)
+    values (#{userinfoId,jdbcType=INTEGER}, #{userinfoSex,jdbcType=CHAR}, #{userinfoAge,jdbcType=CHAR}, 
+      #{userinfoHeight,jdbcType=CHAR}, #{userinfoWeight,jdbcType=CHAR}, #{userinfoSexChoice,jdbcType=CHAR}, 
+      #{userinfoMarriageState,jdbcType=CHAR}, #{userinfoEducation,jdbcType=CHAR}, #{userinfoOftenPlace,jdbcType=VARCHAR}, 
+      #{userinfoRealName,jdbcType=CHAR}, #{userinfoIdNumber,jdbcType=CHAR}, #{userinfoQq,jdbcType=CHAR}, 
+      #{userinfoWechat,jdbcType=CHAR}, #{userinfoMicroblog,jdbcType=CHAR}, #{userinfoConstellation,jdbcType=CHAR}, 
+      #{userinfoBloodType,jdbcType=CHAR}, #{userId,jdbcType=INTEGER}, #{userinfoMode,jdbcType=CHAR}, 
+      #{userHeadimageSrc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hblog.bean.Userinfo">
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userinfoId != null">
+        userinfo_id,
+      </if>
+      <if test="userinfoSex != null">
+        userinfo_sex,
+      </if>
+      <if test="userinfoAge != null">
+        userinfo_age,
+      </if>
+      <if test="userinfoHeight != null">
+        userinfo_height,
+      </if>
+      <if test="userinfoWeight != null">
+        userinfo_weight,
+      </if>
+      <if test="userinfoSexChoice != null">
+        userinfo_sex_choice,
+      </if>
+      <if test="userinfoMarriageState != null">
+        userinfo_marriage_state,
+      </if>
+      <if test="userinfoEducation != null">
+        userinfo_education,
+      </if>
+      <if test="userinfoOftenPlace != null">
+        userinfo_often_place,
+      </if>
+      <if test="userinfoRealName != null">
+        userinfo_real_name,
+      </if>
+      <if test="userinfoIdNumber != null">
+        userinfo_ID_number,
+      </if>
+      <if test="userinfoQq != null">
+        userinfo_qq,
+      </if>
+      <if test="userinfoWechat != null">
+        userinfo_wechat,
+      </if>
+      <if test="userinfoMicroblog != null">
+        userinfo_microblog,
+      </if>
+      <if test="userinfoConstellation != null">
+        userinfo_constellation,
+      </if>
+      <if test="userinfoBloodType != null">
+        userinfo_Blood_type,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userinfoMode != null">
+        userinfo_mode,
+      </if>
+      <if test="userHeadimageSrc != null">
+        user_headimage_src,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userinfoId != null">
+        #{userinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="userinfoSex != null">
+        #{userinfoSex,jdbcType=CHAR},
+      </if>
+      <if test="userinfoAge != null">
+        #{userinfoAge,jdbcType=CHAR},
+      </if>
+      <if test="userinfoHeight != null">
+        #{userinfoHeight,jdbcType=CHAR},
+      </if>
+      <if test="userinfoWeight != null">
+        #{userinfoWeight,jdbcType=CHAR},
+      </if>
+      <if test="userinfoSexChoice != null">
+        #{userinfoSexChoice,jdbcType=CHAR},
+      </if>
+      <if test="userinfoMarriageState != null">
+        #{userinfoMarriageState,jdbcType=CHAR},
+      </if>
+      <if test="userinfoEducation != null">
+        #{userinfoEducation,jdbcType=CHAR},
+      </if>
+      <if test="userinfoOftenPlace != null">
+        #{userinfoOftenPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="userinfoRealName != null">
+        #{userinfoRealName,jdbcType=CHAR},
+      </if>
+      <if test="userinfoIdNumber != null">
+        #{userinfoIdNumber,jdbcType=CHAR},
+      </if>
+      <if test="userinfoQq != null">
+        #{userinfoQq,jdbcType=CHAR},
+      </if>
+      <if test="userinfoWechat != null">
+        #{userinfoWechat,jdbcType=CHAR},
+      </if>
+      <if test="userinfoMicroblog != null">
+        #{userinfoMicroblog,jdbcType=CHAR},
+      </if>
+      <if test="userinfoConstellation != null">
+        #{userinfoConstellation,jdbcType=CHAR},
+      </if>
+      <if test="userinfoBloodType != null">
+        #{userinfoBloodType,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userinfoMode != null">
+        #{userinfoMode,jdbcType=CHAR},
+      </if>
+      <if test="userHeadimageSrc != null">
+        #{userHeadimageSrc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hblog.bean.UserinfoExample" resultType="java.lang.Long">
+    select count(*) from userinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update userinfo
+    <set>
+      <if test="record.userinfoId != null">
+        userinfo_id = #{record.userinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userinfoSex != null">
+        userinfo_sex = #{record.userinfoSex,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoAge != null">
+        userinfo_age = #{record.userinfoAge,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoHeight != null">
+        userinfo_height = #{record.userinfoHeight,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoWeight != null">
+        userinfo_weight = #{record.userinfoWeight,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoSexChoice != null">
+        userinfo_sex_choice = #{record.userinfoSexChoice,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoMarriageState != null">
+        userinfo_marriage_state = #{record.userinfoMarriageState,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoEducation != null">
+        userinfo_education = #{record.userinfoEducation,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoOftenPlace != null">
+        userinfo_often_place = #{record.userinfoOftenPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userinfoRealName != null">
+        userinfo_real_name = #{record.userinfoRealName,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoIdNumber != null">
+        userinfo_ID_number = #{record.userinfoIdNumber,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoQq != null">
+        userinfo_qq = #{record.userinfoQq,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoWechat != null">
+        userinfo_wechat = #{record.userinfoWechat,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoMicroblog != null">
+        userinfo_microblog = #{record.userinfoMicroblog,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoConstellation != null">
+        userinfo_constellation = #{record.userinfoConstellation,jdbcType=CHAR},
+      </if>
+      <if test="record.userinfoBloodType != null">
+        userinfo_Blood_type = #{record.userinfoBloodType,jdbcType=CHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userinfoMode != null">
+        userinfo_mode = #{record.userinfoMode,jdbcType=CHAR},
+      </if>
+      <if test="record.userHeadimageSrc != null">
+        user_headimage_src = #{record.userHeadimageSrc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update userinfo
+    set userinfo_id = #{record.userinfoId,jdbcType=INTEGER},
+      userinfo_sex = #{record.userinfoSex,jdbcType=CHAR},
+      userinfo_age = #{record.userinfoAge,jdbcType=CHAR},
+      userinfo_height = #{record.userinfoHeight,jdbcType=CHAR},
+      userinfo_weight = #{record.userinfoWeight,jdbcType=CHAR},
+      userinfo_sex_choice = #{record.userinfoSexChoice,jdbcType=CHAR},
+      userinfo_marriage_state = #{record.userinfoMarriageState,jdbcType=CHAR},
+      userinfo_education = #{record.userinfoEducation,jdbcType=CHAR},
+      userinfo_often_place = #{record.userinfoOftenPlace,jdbcType=VARCHAR},
+      userinfo_real_name = #{record.userinfoRealName,jdbcType=CHAR},
+      userinfo_ID_number = #{record.userinfoIdNumber,jdbcType=CHAR},
+      userinfo_qq = #{record.userinfoQq,jdbcType=CHAR},
+      userinfo_wechat = #{record.userinfoWechat,jdbcType=CHAR},
+      userinfo_microblog = #{record.userinfoMicroblog,jdbcType=CHAR},
+      userinfo_constellation = #{record.userinfoConstellation,jdbcType=CHAR},
+      userinfo_Blood_type = #{record.userinfoBloodType,jdbcType=CHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      userinfo_mode = #{record.userinfoMode,jdbcType=CHAR},
+      user_headimage_src = #{record.userHeadimageSrc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hblog.bean.Userinfo">
+    update userinfo
+    <set>
+      <if test="userinfoSex != null">
+        userinfo_sex = #{userinfoSex,jdbcType=CHAR},
+      </if>
+      <if test="userinfoAge != null">
+        userinfo_age = #{userinfoAge,jdbcType=CHAR},
+      </if>
+      <if test="userinfoHeight != null">
+        userinfo_height = #{userinfoHeight,jdbcType=CHAR},
+      </if>
+      <if test="userinfoWeight != null">
+        userinfo_weight = #{userinfoWeight,jdbcType=CHAR},
+      </if>
+      <if test="userinfoSexChoice != null">
+        userinfo_sex_choice = #{userinfoSexChoice,jdbcType=CHAR},
+      </if>
+      <if test="userinfoMarriageState != null">
+        userinfo_marriage_state = #{userinfoMarriageState,jdbcType=CHAR},
+      </if>
+      <if test="userinfoEducation != null">
+        userinfo_education = #{userinfoEducation,jdbcType=CHAR},
+      </if>
+      <if test="userinfoOftenPlace != null">
+        userinfo_often_place = #{userinfoOftenPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="userinfoRealName != null">
+        userinfo_real_name = #{userinfoRealName,jdbcType=CHAR},
+      </if>
+      <if test="userinfoIdNumber != null">
+        userinfo_ID_number = #{userinfoIdNumber,jdbcType=CHAR},
+      </if>
+      <if test="userinfoQq != null">
+        userinfo_qq = #{userinfoQq,jdbcType=CHAR},
+      </if>
+      <if test="userinfoWechat != null">
+        userinfo_wechat = #{userinfoWechat,jdbcType=CHAR},
+      </if>
+      <if test="userinfoMicroblog != null">
+        userinfo_microblog = #{userinfoMicroblog,jdbcType=CHAR},
+      </if>
+      <if test="userinfoConstellation != null">
+        userinfo_constellation = #{userinfoConstellation,jdbcType=CHAR},
+      </if>
+      <if test="userinfoBloodType != null">
+        userinfo_Blood_type = #{userinfoBloodType,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userinfoMode != null">
+        userinfo_mode = #{userinfoMode,jdbcType=CHAR},
+      </if>
+      <if test="userHeadimageSrc != null">
+        user_headimage_src = #{userHeadimageSrc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userinfo_id = #{userinfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hblog.bean.Userinfo">
+    update userinfo
+    set userinfo_sex = #{userinfoSex,jdbcType=CHAR},
+      userinfo_age = #{userinfoAge,jdbcType=CHAR},
+      userinfo_height = #{userinfoHeight,jdbcType=CHAR},
+      userinfo_weight = #{userinfoWeight,jdbcType=CHAR},
+      userinfo_sex_choice = #{userinfoSexChoice,jdbcType=CHAR},
+      userinfo_marriage_state = #{userinfoMarriageState,jdbcType=CHAR},
+      userinfo_education = #{userinfoEducation,jdbcType=CHAR},
+      userinfo_often_place = #{userinfoOftenPlace,jdbcType=VARCHAR},
+      userinfo_real_name = #{userinfoRealName,jdbcType=CHAR},
+      userinfo_ID_number = #{userinfoIdNumber,jdbcType=CHAR},
+      userinfo_qq = #{userinfoQq,jdbcType=CHAR},
+      userinfo_wechat = #{userinfoWechat,jdbcType=CHAR},
+      userinfo_microblog = #{userinfoMicroblog,jdbcType=CHAR},
+      userinfo_constellation = #{userinfoConstellation,jdbcType=CHAR},
+      userinfo_Blood_type = #{userinfoBloodType,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      userinfo_mode = #{userinfoMode,jdbcType=CHAR},
+      user_headimage_src = #{userHeadimageSrc,jdbcType=VARCHAR}
+    where userinfo_id = #{userinfoId,jdbcType=INTEGER}
+  </update>
+</mapper>

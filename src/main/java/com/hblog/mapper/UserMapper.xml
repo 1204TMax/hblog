@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hblog.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.hblog.bean.User">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="CHAR" property="userName" />
+    <result column="user_pwd" jdbcType="CHAR" property="userPwd" />
+    <result column="user_login_IP" jdbcType="CHAR" property="userLoginIp" />
+    <result column="user_register_time" jdbcType="VARCHAR" property="userRegisterTime" />
+    <result column="user_historylogin_time" jdbcType="VARCHAR" property="userHistoryloginTime" />
+    <result column="user_historylogin_device" jdbcType="VARCHAR" property="userHistoryloginDevice" />
+    <result column="user_login_state" jdbcType="VARCHAR" property="userLoginState" />
+    <result column="user_login_banned" jdbcType="VARCHAR" property="userLoginBanned" />
+    <result column="user_headimage_src" jdbcType="VARCHAR" property="userHeadimageSrc" />
+    <result column="user_score" jdbcType="INTEGER" property="userScore" />
+    <result column="user_grade" jdbcType="VARCHAR" property="userGrade" />
+    <result column="user_real" jdbcType="VARCHAR" property="userReal" />
+    <result column="user_label" jdbcType="VARCHAR" property="userLabel" />
+    <result column="user_signature" jdbcType="VARCHAR" property="userSignature" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, user_name, user_pwd, user_login_IP, user_register_time, user_historylogin_time, 
+    user_historylogin_device, user_login_state, user_login_banned, user_headimage_src, 
+    user_score, user_grade, user_real, user_label, user_signature
+  </sql>
+  <select id="selectByExample" parameterType="com.hblog.bean.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hblog.bean.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hblog.bean.User">
+    insert into user (user_id, user_name, user_pwd, 
+      user_login_IP, user_register_time, user_historylogin_time, 
+      user_historylogin_device, user_login_state, 
+      user_login_banned, user_headimage_src, user_score, 
+      user_grade, user_real, user_label, 
+      user_signature)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=CHAR}, #{userPwd,jdbcType=CHAR}, 
+      #{userLoginIp,jdbcType=CHAR}, #{userRegisterTime,jdbcType=VARCHAR}, #{userHistoryloginTime,jdbcType=VARCHAR}, 
+      #{userHistoryloginDevice,jdbcType=VARCHAR}, #{userLoginState,jdbcType=VARCHAR}, 
+      #{userLoginBanned,jdbcType=VARCHAR}, #{userHeadimageSrc,jdbcType=VARCHAR}, #{userScore,jdbcType=INTEGER}, 
+      #{userGrade,jdbcType=VARCHAR}, #{userReal,jdbcType=VARCHAR}, #{userLabel,jdbcType=VARCHAR}, 
+      #{userSignature,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hblog.bean.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userPwd != null">
+        user_pwd,
+      </if>
+      <if test="userLoginIp != null">
+        user_login_IP,
+      </if>
+      <if test="userRegisterTime != null">
+        user_register_time,
+      </if>
+      <if test="userHistoryloginTime != null">
+        user_historylogin_time,
+      </if>
+      <if test="userHistoryloginDevice != null">
+        user_historylogin_device,
+      </if>
+      <if test="userLoginState != null">
+        user_login_state,
+      </if>
+      <if test="userLoginBanned != null">
+        user_login_banned,
+      </if>
+      <if test="userHeadimageSrc != null">
+        user_headimage_src,
+      </if>
+      <if test="userScore != null">
+        user_score,
+      </if>
+      <if test="userGrade != null">
+        user_grade,
+      </if>
+      <if test="userReal != null">
+        user_real,
+      </if>
+      <if test="userLabel != null">
+        user_label,
+      </if>
+      <if test="userSignature != null">
+        user_signature,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userPwd != null">
+        #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userLoginIp != null">
+        #{userLoginIp,jdbcType=CHAR},
+      </if>
+      <if test="userRegisterTime != null">
+        #{userRegisterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userHistoryloginTime != null">
+        #{userHistoryloginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userHistoryloginDevice != null">
+        #{userHistoryloginDevice,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginState != null">
+        #{userLoginState,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginBanned != null">
+        #{userLoginBanned,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadimageSrc != null">
+        #{userHeadimageSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="userScore != null">
+        #{userScore,jdbcType=INTEGER},
+      </if>
+      <if test="userGrade != null">
+        #{userGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="userReal != null">
+        #{userReal,jdbcType=VARCHAR},
+      </if>
+      <if test="userLabel != null">
+        #{userLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="userSignature != null">
+        #{userSignature,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hblog.bean.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=CHAR},
+      </if>
+      <if test="record.userPwd != null">
+        user_pwd = #{record.userPwd,jdbcType=CHAR},
+      </if>
+      <if test="record.userLoginIp != null">
+        user_login_IP = #{record.userLoginIp,jdbcType=CHAR},
+      </if>
+      <if test="record.userRegisterTime != null">
+        user_register_time = #{record.userRegisterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userHistoryloginTime != null">
+        user_historylogin_time = #{record.userHistoryloginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userHistoryloginDevice != null">
+        user_historylogin_device = #{record.userHistoryloginDevice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLoginState != null">
+        user_login_state = #{record.userLoginState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLoginBanned != null">
+        user_login_banned = #{record.userLoginBanned,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userHeadimageSrc != null">
+        user_headimage_src = #{record.userHeadimageSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userScore != null">
+        user_score = #{record.userScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.userGrade != null">
+        user_grade = #{record.userGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userReal != null">
+        user_real = #{record.userReal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLabel != null">
+        user_label = #{record.userLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSignature != null">
+        user_signature = #{record.userSignature,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=CHAR},
+      user_pwd = #{record.userPwd,jdbcType=CHAR},
+      user_login_IP = #{record.userLoginIp,jdbcType=CHAR},
+      user_register_time = #{record.userRegisterTime,jdbcType=VARCHAR},
+      user_historylogin_time = #{record.userHistoryloginTime,jdbcType=VARCHAR},
+      user_historylogin_device = #{record.userHistoryloginDevice,jdbcType=VARCHAR},
+      user_login_state = #{record.userLoginState,jdbcType=VARCHAR},
+      user_login_banned = #{record.userLoginBanned,jdbcType=VARCHAR},
+      user_headimage_src = #{record.userHeadimageSrc,jdbcType=VARCHAR},
+      user_score = #{record.userScore,jdbcType=INTEGER},
+      user_grade = #{record.userGrade,jdbcType=VARCHAR},
+      user_real = #{record.userReal,jdbcType=VARCHAR},
+      user_label = #{record.userLabel,jdbcType=VARCHAR},
+      user_signature = #{record.userSignature,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hblog.bean.User">
+    update user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userPwd != null">
+        user_pwd = #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userLoginIp != null">
+        user_login_IP = #{userLoginIp,jdbcType=CHAR},
+      </if>
+      <if test="userRegisterTime != null">
+        user_register_time = #{userRegisterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userHistoryloginTime != null">
+        user_historylogin_time = #{userHistoryloginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userHistoryloginDevice != null">
+        user_historylogin_device = #{userHistoryloginDevice,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginState != null">
+        user_login_state = #{userLoginState,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginBanned != null">
+        user_login_banned = #{userLoginBanned,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadimageSrc != null">
+        user_headimage_src = #{userHeadimageSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="userScore != null">
+        user_score = #{userScore,jdbcType=INTEGER},
+      </if>
+      <if test="userGrade != null">
+        user_grade = #{userGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="userReal != null">
+        user_real = #{userReal,jdbcType=VARCHAR},
+      </if>
+      <if test="userLabel != null">
+        user_label = #{userLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="userSignature != null">
+        user_signature = #{userSignature,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hblog.bean.User">
+    update user
+    set user_name = #{userName,jdbcType=CHAR},
+      user_pwd = #{userPwd,jdbcType=CHAR},
+      user_login_IP = #{userLoginIp,jdbcType=CHAR},
+      user_register_time = #{userRegisterTime,jdbcType=VARCHAR},
+      user_historylogin_time = #{userHistoryloginTime,jdbcType=VARCHAR},
+      user_historylogin_device = #{userHistoryloginDevice,jdbcType=VARCHAR},
+      user_login_state = #{userLoginState,jdbcType=VARCHAR},
+      user_login_banned = #{userLoginBanned,jdbcType=VARCHAR},
+      user_headimage_src = #{userHeadimageSrc,jdbcType=VARCHAR},
+      user_score = #{userScore,jdbcType=INTEGER},
+      user_grade = #{userGrade,jdbcType=VARCHAR},
+      user_real = #{userReal,jdbcType=VARCHAR},
+      user_label = #{userLabel,jdbcType=VARCHAR},
+      user_signature = #{userSignature,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>
