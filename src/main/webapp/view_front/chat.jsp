@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>私信聊天</title>
+<title>私信</title>
 <link rel="stylesheet" href="../css/amazeui.min.css" />
 <link rel="stylesheet" href="../css/chatmain.css" />
 <%
