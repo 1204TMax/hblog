@@ -45,7 +45,8 @@
           </trim>
         </if>
       </foreach>
-    </where>
+    </where> 
+    
   </sql>
   <sql id="Update_By_Example_Where_Clause">
     <where>
