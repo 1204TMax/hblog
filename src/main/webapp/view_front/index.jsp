@@ -48,7 +48,7 @@ li {
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="../message/getmessagefromindex"> <font
 					style="vertical-align: inherit;"> <font
-						style="vertical-align: inherit;">聊天</font>
+						style="vertical-align: inherit;">私信</font>
 				</font>
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="#" id="samecity"> <font

@@ -121,7 +121,8 @@ public class messagecontroller {
 	@RequestMapping("/insertchatrecord")
 	public void insertchatrecord(HttpServletRequest request, Message message) {
 		String messagecontent = request.getParameter("messagecontent");
-		int receiveid = Integer.parseInt(request.getParameter("receiveid"));
+		String receivename = request.getParameter("recivename");
+		int receiveid = usim.serchuserbyname(receivename).getUserId();
 		User user = (User) session.getAttribute("user");
 		int userid = user.getUserId();
 		message.setSendId(userid);
@@ -142,12 +143,12 @@ public class messagecontroller {
 		int otherid = usim.serchuserbyname(othername).getUserId();
 		List<Message> messages = mepl.getchatrecord(userid, otherid);
 		/* 这里来判断message的时间顺序start */
-		System.err.println("开始");
+/*		System.err.println("开始");
 		System.err.println("message的大小" + messages.size());
 		for (int i = 0; i < messages.size(); i++) {
 			System.out.println(i + ":" + messages.get(i).getMessageContent());
 		}
-		System.err.println("结束");
+		System.err.println("结束");*/
 		/* 这里来判断message的时间顺序end */
 		Map<String, List<Message>> map = new HashMap<String, List<Message>>();
 		map.put("messages", messages);

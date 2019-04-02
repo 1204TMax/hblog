@@ -144,20 +144,27 @@ window.onload=function(){
 	var namelistc = new Array();
 	var imglistf = new Array();
 	var namelistf = new Array();
+	var choiceuser;
 	/* 查询联系人名单 */
 	var chatlist = document.getElementById('chatlist');
 	var focuslist = document.getElementById('focuslist');
 	var chatbox = document.getElementById('chatbox');
+	/* 获得左边联系人/关注的单个div */
+	var chatli = document.getElementsByClassName("chatli");
+	var focusli = document.getElementsByClassName("focusli"); 
+	
 	function a(){
 		var si1 = document.getElementById('si_1');
 		var si2 = document.getElementById('si_2');
 		si1.onclick=function(){
 			si1.style.background="url(../img/icon/head_2_1.png) no-repeat"
 			si2.style.background="";
+			g("chatuser")
 		};
 		si2.onclick=function(){
 			si2.style.background="url(../img/icon/head_3_1.png) no-repeat"
 			si1.style.background="";
+			g("focususer")
 		};
 	};
 	function b(){
@@ -175,9 +182,10 @@ window.onload=function(){
 				chat.scrollTop=chat.scrollHeight;
 				talk.style.background="#fff";
 				text.style.background="#fff";
-				var url = "../message/insertchatrecord?messagecontent="+messagecontent+"&receiveid="+"10";
+				var url = "../message/insertchatrecord?messagecontent="+messagecontent+"&recivename="+choiceuser;
 				console.log("url:"+url)
 				$.post(url);
+				
 			};
 		};
 	};
@@ -255,8 +263,6 @@ if(i==0){
 	}
 	/* 选中某个联系人，联系人选项变灰色 ，并获得聊天记录*/
 	function e(){
-		var chatli = document.getElementsByClassName("chatli");
-		var focusli = document.getElementsByClassName("focusli"); 
 		/* 更改背景以及获得聊天记录 */
 		/* 联系人 */
 		for(var i=0;i<chatli.length;i++){
@@ -269,41 +275,11 @@ if(i==0){
 					this.style.background="#dedbdb";
 					/* 插入聊天记录start */
 					var url = "../message/getmessagetotwoman?othername="+namelistc[iichat];
-					$.ajax({
-			            dataType:"json",
-			            type:"POST",
-			            url:url,
-			            success:function(data){
-			            	var arr=data.messages;
-			            	var chathtml = "";
-		            		var conhtml = "";
-			            	for(var i=0;i<data.messages.length;i++){
-			            		var sendid = arr[i].sendId;
-			            		var receiveid = arr[i].receiveId;
-			            		var time = arr[i].messageTime;
-			            		var content = arr[i].messageContent
-			            		var username = '${user.userName }';
-			            		var othername = namelistc[iichat];
-			            		var userimg = '${headimgsrc}';
-			            		var otherimg = imglistc[iichat];
-			            		/* 我 */
-			            		if(sendid == '${user.userId }'){
-			            			chathtml = "<li class='me'>"
-			            			+"<img src='<%=basePath%>image/"+userimg+"' title="+username+"><span>"+content+"</span></li>"
-			            		/* 他 */
-			            		}else{
-			            			chathtml = "<li class='other'>"
-				            			+"<img src='<%=basePath%>image/"+otherimg+"' title="+othername+"><span>"+content+"</span></li>"
-			            		}
-			            		conhtml = conhtml + chathtml;
-			            	}
-			            	chatbox.innerHTML=conhtml
-			            },error:function(jqXHR, error, errorThrown){
-			                console.log(jqXHR.status);
-			                alert("请刷新");
-			            }
-			        });
-					/* 插入聊天记录end */
+					var otherimg = imglistc[iichat];
+					var othername = namelistc[iichat];
+					getchatdata.abort()
+					f(url,othername,otherimg);
+					choiceuser = namelistc[iichat];
 				 }
 			})(i,chatli[i]);
 	}
@@ -317,55 +293,89 @@ if(i==0){
 					this.style.background="#dedbdb";
 					/* 插入聊天记录start */
 					var url = "../message/getmessagetotwoman?othername="+namelistf[iifocus];
-					$.ajax({
-			            dataType:"json",
-			            type:"POST",
-			            url:url,
-			            success:function(data){
-			            	var arr=data.messages;
-			            	var chathtml = "";
-		            		var conhtml = "";
-			            	for(var i=0;i<data.messages.length;i++){
-			            		var sendid = arr[i].sendId;
-			            		var receiveid = arr[i].receiveId;
-			            		var time = arr[i].messageTime;
-			            		var content = arr[i].messageContent
-			            		var username = '${user.userName }';
-			            		var othername = namelistf[iichat];
-			            		var userimg = '${headimgsrc}';
-			            		var otherimg = imglistf[iichat];
-			            		/* 我 */
-			            		if(sendid == '${user.userId }'){
-			            			chathtml = "<li class='me'>"
-			            			+"<img src='<%=basePath%>image/"+userimg+"' title="+username+"><span>"+content+"</span></li>"
-			            		/* 他 */
-			            		}else{
-			            			chathtml = "<li class='other'>"
-				            			+"<img src='<%=basePath%>image/"+otherimg+"' title="+othername+"><span>"+content+"</span></li>"
-			            		}
-			            		conhtml = conhtml + chathtml;
-			            	}
-			            	chatbox.innerHTML=conhtml
-			            },error:function(jqXHR, error, errorThrown){
-			                console.log(jqXHR.status);
-			                alert("请刷新");
-			            }
-			        });
-					/* 插入聊天记录end */
-					
+					var othername = namelistf[iifocus];
+					var otherimg = imglistf[iifocus];
+					getchatdata.abort()
+					f(url,othername,otherimg);
+					choiceuser = namelistf[iifocus];
 				}
 			 })(i,focusli[i]);
 		} 
+	}
+	var getchatdata;
+	/* f方法就是长轮询ajax 获得聊天记录*/
+	function f(url,othername,otherimg){
+		 getchatdata = $.ajax({
+            dataType:"json",
+            type:"POST",
+            url:url,
+            async: true,
+            success:function(data){
+            	var arr=data.messages;
+            	var chathtml = "";
+        		var conhtml = "";
+        		var username = '${user.userName }';
+        		var userimg = '${headimgsrc}';
+            	if(data!=null){
+                	for(var i=0;i<data.messages.length;i++){
+                		var sendid = arr[i].sendId;
+                		var receiveid = arr[i].receiveId;
+                		var time = arr[i].messageTime;
+                		var content = arr[i].messageContent
+                		/* 我 */
+                		if(sendid == '${user.userId }'){
+                			chathtml = "<li class='me'>"
+                			+"<img src='<%=basePath%>image/"+userimg+"' title="+username+"><span>"+content+"</span></li>"
+                		/* 他 */
+                		}else{
+                			chathtml = "<li class='other'>"
+    	            			+"<img src='<%=basePath%>image/"+otherimg+"' title="+othername+"><span>"+content+"</span></li>"
+                		}
+                		conhtml = conhtml + chathtml;
+                	}
+                	
+            	}{
+            		chathtml = "<li class='me'>"
+            			+"<img src='<%=basePath%>image/"+userimg+"' title='我'><span>你还没有发任何消息呢</span></li>"
+            	}
+            	chatbox.innerHTML=conhtml
+            	f(url,othername,otherimg)
+            },error:function(jqXHR, error, errorThrown){
+                console.log(jqXHR.status);
+            }
+        });
+	}
+	/* 切换联系人和关注的时候获得第一个聊天记录 */
+	var ig = 0; /* 第二次开始才有中断，这里判断第一次 */
+	function g(tabchoice){
+		if(tabchoice=="chatuser"){
+			chatli[0].style.background="#dedbdb";
+			var url = "../message/getmessagetotwoman?othername="+namelistc[0];
+			var otherimg = imglistc[0];
+			var othername = namelistc[0];
+			ig = ig + 1;
+			if(ig!==1){
+				getchatdata.abort(); /* 要先有才能中断 */
+			}
+			f(url,othername,otherimg);
+			choiceuser = namelistc[0];
+		}else{
+			focusli[0].style.background="#dedbdb";
+			var url = "../message/getmessagetotwoman?othername="+namelistf[0];
+			var otherimg = imglistf[0];
+			var othername = namelistf[0];
+			getchatdata.abort();
+			f(url,othername,otherimg);
+			choiceuser = namelistf[0];
+		}
 	}
 	a();
 	b();
 	c();
 	d();
 	e();
+	g("chatuser");
 };
-			/* 获取单个用户的聊天记录 */
-			function f(){
-			}
 	</script>
 
 
