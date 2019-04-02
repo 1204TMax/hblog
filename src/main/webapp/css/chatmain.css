@@ -50,7 +50,6 @@ ul{
 ul li{
 	list-style-type: none;
 }
-
 .box{
 	background-color: #0188B7
     background-repeat: no-repeat;
@@ -163,15 +162,11 @@ ul li{
 }
 
 #si_1{
-	background-color: #0188B7 no-repeat;
+	background: url(../img/icon/head_2.png) no-repeat;
 }
 
 #si_2{
-	background-color: #0188B7 no-repeat;
-}
-
-#si_3{
-	background-color: #0188B7 no-repeat;
+	background: url(../img/icon/head_3.png) no-repeat;
 }
 
 .sidestrip_icon{
@@ -300,7 +295,7 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 }
 
 .friends_box:hover{
-	background:#dedbdb;
+	background:#dedbdb !important;
 }
 
 .user_head{

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.hblog.bean.BlogCommentExample.Criteria;
 import com.hblog.bean.Message;
 import com.hblog.bean.MessageExample;
 import com.hblog.mapper.BlogMapper;
@@ -37,10 +38,18 @@ public class messageserviceimpl {
 	/*查询双方聊天记录*/
 	public List<Message> getchatrecord(int userid,int otherid){
 		MessageExample messageexample = new MessageExample();
-		MessageExample.Criteria
-		messageCriteria=messageexample.createCriteria();
-		messageCriteria.andSendIdEqualTo(userid);
-		messageCriteria.andReceiveIdEqualTo(otherid);
+		com.hblog.bean.MessageExample.Criteria criteria2 = messageexample.createCriteria();
+		criteria2=messageexample.createCriteria();
+		criteria2.andSendIdEqualTo(userid);
+		criteria2.andReceiveIdEqualTo(otherid);
+		
+		com.hblog.bean.MessageExample.Criteria criteria3 = messageexample.createCriteria();
+		criteria3=messageexample.createCriteria();
+		criteria3.andSendIdEqualTo(otherid);
+		criteria3.andReceiveIdEqualTo(userid);
+		
+		messageexample.or(criteria2);
+		messageexample.or(criteria3);
 		List<Message> messages = this.messagemapper.selectByExample(messageexample);
 		return messages;
 	}

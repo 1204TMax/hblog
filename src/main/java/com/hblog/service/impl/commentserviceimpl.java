@@ -31,7 +31,6 @@ public class commentserviceimpl {
 	gettime gettime;
 	
 	public List<BlogComment> getcomment(int blogid){
-		System.err.println(blogid);
 		BlogComment BlogComment = new BlogComment();
 		BlogCommentExample blogcommentexample = new BlogCommentExample();
 		BlogCommentExample.Criteria

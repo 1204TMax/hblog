@@ -15,14 +15,16 @@
 			+ path + "/";
 %>
 </head>
-<body>
+<body style="background: url(../img/bg5.jpg)">
 	<div class="box">
 		<div class="wechat">
 
 			<div class="sidestrip">
 				<div class="am-dropdown" data-am-dropdown>
 					<!--头像插件-->
-					<div class="own_head am-dropdown-toggle"></div>
+					<div class="own_head am-dropdown-toggle">
+						<img src="<%=basePath%>image/${headimgsrc}" height="30" width="30" />
+					</div>
 					<div class="am-dropdown-content">
 						<div class="own_head_top">
 							<div class="own_head_top_text">
@@ -34,7 +36,7 @@
 						</div>
 						<div class="own_head_bottom">
 							<p>
-								<span>地区</span>江西 九江
+								<span>地区</span>${userinfo.userinfoOftenPlace }
 							</p>
 							<div class="own_head_bottom_img">
 								<a href=""><img src="../img/icon/head_1.png" /></a> <a href=""><img
@@ -47,49 +49,29 @@
 				<div class="sidestrip_icon">
 					<a id="si_1"
 						style="background: url(../img/icon/head_2_1.png) no-repeat;"></a>
-					<a id="si_2"></a> <a id="si_3"></a>
+					<a id="si_2"></a>
 				</div>
 
 				<!--底部扩展键-->
 				<div id="doc-dropdown-justify-js">
 					<div class="am-dropdown" id="doc-dropdown-js"
-						style="position: initial;">
-						<div class="sidestrip_bc am-dropdown-toggle"></div>
-						<ul class="am-dropdown-content" style="">
-							<li><a href="#"
-								data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}">意见反馈</a>
-								<div class="am-modal am-modal-no-btn" tabindex="-1"
-									id="doc-modal-1">
-									<div class="am-modal-dialog">
-										<div class="am-modal-hd">
-											Modal 标题 <a href="javascript: void(0)"
-												class="am-close am-close-spin" data-am-modal-close>&times;</a>
-										</div>
-										<div class="am-modal-bd">Modal 内容。本 Modal 无法通过遮罩层关闭。</div>
-									</div>
-								</div></li>
-
-							<li><a href="#">备份与恢复</a></li>
-							<li><a href="#">设置</a></li>
-						</ul>
-					</div>
+						style="position: initial;"></div>
 				</div>
 			</div>
 
-			<!--聊天列表-->
+			<!--联系人-->
 			<div class="middle on">
 				<div class="wx_search">
-					<input type="text" placeholder="搜索" />
+					<input type="text" placeholder="${tang }" />
 					<button>+</button>
 				</div>
 				<div class="office_text">
-					<ul class="user_list" id="user_list">
-
+					<ul class="friends_list">
+						<li id="chatlist"></li>
 					</ul>
 				</div>
 			</div>
-
-			<!--好友列表-->
+			<!--我的关注列表-->
 			<div class="middle">
 				<div class="wx_search">
 					<input type="text" placeholder="搜索" />
@@ -97,103 +79,29 @@
 				</div>
 				<div class="office_text">
 					<ul class="friends_list">
-						<li>
-							<p>新的朋友</p>
+						<li id="focuslist">
+							<p>我关注的人</p>
 							<div class="friends_box">
 								<div class="user_head">
-									<img src="<%=basePath%>image/${userinfos[0].userHeadimageSrc}" />
+									<img src="<%=basePath%>image/${userinfo.userHeadimageSrc}" />
 								</div>
 								<div class="friends_text">
-									<p class="user_name">新的朋友</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<p>公众号</p>
-							<div class="friends_box">
-								<div class="user_head">
-									<img src="<%=basePath%>image/${userinfos[0].userHeadimageSrc}" />
-								</div>
-								<div class="friends_text">
-									<p class="user_name">公众号</p>
+									<p class="user_name">${user.userName }</p>
 								</div>
 							</div>
 						</li>
 					</ul>
 				</div>
 			</div>
-
-			<!--程序列表-->
-			<div class="middle">
-				<div class="wx_search">
-					<input type="text" placeholder="搜索收藏内容" />
-					<button>+</button>
-				</div>
-				<div class="office_text">
-					<ul class="icon_list">
-						<li class="icon_active">
-							<div class="icon">
-								<img src="../img/icon/icon.png" alt="" />
-							</div> <span>全部收藏</span>
-						</li>
-						<li>
-							<div class="icon">
-								<img src="../img/icon/icon1.png" alt="" />
-							</div> <span>链接</span>
-						</li>
-						<li>
-							<div class="icon">
-								<img src="../img/icon/icon2.png" alt="" />
-							</div> <span>相册</span>
-						</li>
-						<li>
-							<div class="icon">
-								<img src="../img/icon/icon3.png" alt="" />
-							</div> <span>笔记</span>
-						</li>
-						<li>
-							<div class="icon">
-								<img src="../img/icon/icon4.png" alt="" />
-							</div> <span>文件</span>
-						</li>
-						<li>
-							<div class="icon">
-								<img src="../img/icon/icon5.png" alt="" />
-							</div> <span>音乐</span>
-						</li>
-						<li>
-							<div class="icon">
-								<img src="../img/icon/icon6.png" alt="" />
-							</div> <span>标签</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-
 			<!--聊天窗口-->
 			<div class="talk_window">
 				<div class="windows_top">
 					<div class="windows_top_box">
-						<span>${user.userName }</span>
+						<span id="chatusername"></span>
 						<ul class="window_icon">
-							<li><a href=""><img src="../img/icon/icon7.png" /></a></li>
-							<li><a href=""><img src="../img/icon/icon8.png" /></a></li>
-							<li><a href=""><img src="../img/icon/icon9.png" /></a></li>
-							<li><a href=""><img src="../img/icon/icon10.png" /></a></li>
 						</ul>
 						<div class="extend" class="am-btn am-btn-success"
 							data-am-offcanvas="{target: '#doc-oc-demo3'}"></div>
-						<!-- 侧边栏内容 -->
-						<div id="doc-oc-demo3" class="am-offcanvas">
-							<div class="am-offcanvas-bar am-offcanvas-bar-flip">
-								<div class="am-offcanvas-content">
-									<p>
-										<a href="http://music.163.com/#/song?id=385554"
-											target="_blank">网易音乐</a>
-									</p>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 
@@ -218,7 +126,7 @@
 					</div>
 					<div class="input_box">
 						<textarea name="" rows="" cols="" id="input_box"></textarea>
-						<button id="send">发送（S）</button>
+						<button id="send">发送</button>
 					</div>
 				</div>
 			</div>
@@ -230,27 +138,26 @@
 	<script type="text/javascript" src="../js/zUI.js"></script>
 	<script type="text/javascript" src="../js/wechat.js"></script>
 
-<script type="text/javascript">
-//三图标
+	<script type="text/javascript">
 window.onload=function(){
+	var imglistc = new Array();
+	var namelistc = new Array();
+	var imglistf = new Array();
+	var namelistf = new Array();
+	/* 查询联系人名单 */
+	var chatlist = document.getElementById('chatlist');
+	var focuslist = document.getElementById('focuslist');
+	var chatbox = document.getElementById('chatbox');
 	function a(){
 		var si1 = document.getElementById('si_1');
 		var si2 = document.getElementById('si_2');
-		var si3 = document.getElementById('si_3');
 		si1.onclick=function(){
-			si1.style.background="url(images/icon/head_2_1.png) no-repeat"
+			si1.style.background="url(../img/icon/head_2_1.png) no-repeat"
 			si2.style.background="";
-			si3.style.background="";
 		};
 		si2.onclick=function(){
-			si2.style.background="url(images/icon/head_3_1.png) no-repeat"
+			si2.style.background="url(../img/icon/head_3_1.png) no-repeat"
 			si1.style.background="";
-			si3.style.background="";
-		};
-		si3.onclick=function(){
-			si3.style.background="url(images/icon/head_4_1.png) no-repeat"
-			si1.style.background="";
-			si2.style.background="";
 		};
 	};
 	function b(){
@@ -262,110 +169,205 @@ window.onload=function(){
 			if(text.value ==''){
 				alert('不能发送空消息');
 			}else{
-				chat.innerHTML += '<li class="me"><img src="'+'images/own_head.jpg'+'"><span>'+text.value+'</span></li>';
+				var messagecontent = $("#input_box").val();
+				chat.innerHTML += '<li class="me"><img src="<%=basePath%>image/${headimgsrc}"><span>'+text.value+'</span></li>';
 				text.value = '';
 				chat.scrollTop=chat.scrollHeight;
 				talk.style.background="#fff";
 				text.style.background="#fff";
+				var url = "../message/insertchatrecord?messagecontent="+messagecontent+"&receiveid="+"10";
+				console.log("url:"+url)
+				$.post(url);
 			};
 		};
 	};
-
+	/* 后台获取聊天的联系人列表并添加到页面 */
+	function c(){
+		var conhtml= ""; 
+				<c:forEach items="${userinfos}" var="userinfo">
+					imglistc.push("${userinfo.userHeadimageSrc}")
+				</c:forEach>
+				
+				<c:forEach items="${users}" var="user">
+					namelistc.push("${user.userName}")
+				</c:forEach>
+		for(var i = 0;i<'${fn:length(users)}';i++){
+			var chatlist1 = "";
+			if(i==0){
+				 chatlist1 ="<p>联系人</p>"
+					+"<div class='friends_box chatli'>"
+					+"<div class='user_head'>"
+					+"<img height=40px width=40px src=<%=basePath%>image/"+imglistc[i]+"/ >"
+					+"</div>"
+					+"<div class='friends_text'>"
+					+"<p class='user_name'>"+namelistc[i]+"</p>"
+					+"</div>"
+					+"</div>" 
+			}else{
+				 chatlist1 ="<div class='friends_box chatli'>"
+					+"<div class='user_head'>"
+					+"<img height=40px width=40px src=<%=basePath%>image/"+imglistc[i]+"/ >"
+					+"</div>"
+					+"<div class='friends_text'>"
+					+"<p class='user_name'>"+namelistc[i]+"</p>"
+					+"</div>"
+					+"</div>" 
+			}
+			conhtml = conhtml+chatlist1;
+		}
+		chatlist.innerHTML=conhtml;
+	}
+	/* 后台获取我的关注列表 */
+	
+function d(){
+	var conhtml= ""; 
+	<c:forEach items="${focusinfo}" var="userinfo">
+		imglistf.push("${userinfo.userHeadimageSrc}")
+	</c:forEach>
+	<c:forEach items="${userfocus}" var="user">
+		namelistf.push("${user.userName}")
+	</c:forEach>
+for(var i = 0;i<'${fn:length(userfocus)}';i++){
+var chatlist1 = "";
+if(i==0){
+	 chatlist1 ="<p>我关注的人</p>"
+		+"<div class='friends_box focusli'>"
+		+"<div class='user_head'>"
+		+"<img height=40px width=40px src=<%=basePath%>image/"+imglistf[i]+"/ >"
+		+"</div>"
+		+"<div class='friends_text'>"
+		+"<p class='user_name'>"+namelistf[i]+"</p>"
+		+"</div>"
+		+"</div>" 
+}else{
+	 chatlist1 ="<div class='friends_box focusli'>"
+		+"<div class='user_head'>"
+		+"<img height=40px width=40px src=<%=basePath%>image/"+imglistf[i]+"/ >"
+		+"</div>"
+		+"<div class='friends_text'>"
+		+"<p class='user_name'>"+namelistf[i]+"</p>"
+		+"</div>"
+		+"</div>" 
+				}
+		conhtml = conhtml+chatlist1;
+			}
+		focuslist.innerHTML=conhtml;
+	}
+	/* 选中某个联系人，联系人选项变灰色 ，并获得聊天记录*/
+	function e(){
+		var chatli = document.getElementsByClassName("chatli");
+		var focusli = document.getElementsByClassName("focusli"); 
+		/* 更改背景以及获得聊天记录 */
+		/* 联系人 */
+		for(var i=0;i<chatli.length;i++){
+			(function attachchat(iichat,chatlii){
+				chatlii.onclick = function() {
+					for(var iii=0;iii<chatli.length;iii++){
+						chatli[iii].style.background="#E5E2E2";
+					}
+					document.getElementById("chatusername").innerHTML=namelistc[iichat];
+					this.style.background="#dedbdb";
+					/* 插入聊天记录start */
+					var url = "../message/getmessagetotwoman?othername="+namelistc[iichat];
+					$.ajax({
+			            dataType:"json",
+			            type:"POST",
+			            url:url,
+			            success:function(data){
+			            	var arr=data.messages;
+			            	var chathtml = "";
+		            		var conhtml = "";
+			            	for(var i=0;i<data.messages.length;i++){
+			            		var sendid = arr[i].sendId;
+			            		var receiveid = arr[i].receiveId;
+			            		var time = arr[i].messageTime;
+			            		var content = arr[i].messageContent
+			            		var username = '${user.userName }';
+			            		var othername = namelistc[iichat];
+			            		var userimg = '${headimgsrc}';
+			            		var otherimg = imglistc[iichat];
+			            		/* 我 */
+			            		if(sendid == '${user.userId }'){
+			            			chathtml = "<li class='me'>"
+			            			+"<img src='<%=basePath%>image/"+userimg+"' title="+username+"><span>"+content+"</span></li>"
+			            		/* 他 */
+			            		}else{
+			            			chathtml = "<li class='other'>"
+				            			+"<img src='<%=basePath%>image/"+otherimg+"' title="+othername+"><span>"+content+"</span></li>"
+			            		}
+			            		conhtml = conhtml + chathtml;
+			            	}
+			            	chatbox.innerHTML=conhtml
+			            },error:function(jqXHR, error, errorThrown){
+			                console.log(jqXHR.status);
+			                alert("请刷新");
+			            }
+			        });
+					/* 插入聊天记录end */
+				 }
+			})(i,chatli[i]);
+	}
+		/* 关注 */
+		for(var i=0;i<focusli.length;i++){
+			(function attachfocus(iifocus,focuslii){
+				focuslii.onclick = function(){
+					for(var iii=0;iii<focusli.length;iii++){
+						 focusli[iii].style.background="#E5E2E2";
+					}
+					this.style.background="#dedbdb";
+					/* 插入聊天记录start */
+					var url = "../message/getmessagetotwoman?othername="+namelistf[iifocus];
+					$.ajax({
+			            dataType:"json",
+			            type:"POST",
+			            url:url,
+			            success:function(data){
+			            	var arr=data.messages;
+			            	var chathtml = "";
+		            		var conhtml = "";
+			            	for(var i=0;i<data.messages.length;i++){
+			            		var sendid = arr[i].sendId;
+			            		var receiveid = arr[i].receiveId;
+			            		var time = arr[i].messageTime;
+			            		var content = arr[i].messageContent
+			            		var username = '${user.userName }';
+			            		var othername = namelistf[iichat];
+			            		var userimg = '${headimgsrc}';
+			            		var otherimg = imglistf[iichat];
+			            		/* 我 */
+			            		if(sendid == '${user.userId }'){
+			            			chathtml = "<li class='me'>"
+			            			+"<img src='<%=basePath%>image/"+userimg+"' title="+username+"><span>"+content+"</span></li>"
+			            		/* 他 */
+			            		}else{
+			            			chathtml = "<li class='other'>"
+				            			+"<img src='<%=basePath%>image/"+otherimg+"' title="+othername+"><span>"+content+"</span></li>"
+			            		}
+			            		conhtml = conhtml + chathtml;
+			            	}
+			            	chatbox.innerHTML=conhtml
+			            },error:function(jqXHR, error, errorThrown){
+			                console.log(jqXHR.status);
+			                alert("请刷新");
+			            }
+			        });
+					/* 插入聊天记录end */
+					
+				}
+			 })(i,focusli[i]);
+		} 
+	}
 	a();
 	b();
 	c();
+	d();
+	e();
 };
- window.onload=function b(){
-	var text = document.getElementById('input_box');
-	var chat = document.getElementById('chatbox');
-	var btn = document.getElementById('send');
-	var talk = document.getElementById('talkbox');
-	
-	btn.onclick=function(){
-		if(text.value ==''){
-            alert('不能发送空消息');
-        }else{
-        	 var url2 = "../message/insertchatrecord?messagecontent="+text.value+"&receiveid="+'${users[0].userId}';
-        	$.post(url2);
-        	var url = '${headimgsrc}';
-			chat.innerHTML += '<li class="me"><img src="<%=basePath%>image/'+url+'"><span>'+text.value+'</span></li>';
-			text.value = '';
-			chat.scrollTop=chat.scrollHeight;
-			talk.style.background="#fff";
-			text.style.background="#fff";
-		};
-	};
- }
-
- window.onload=function c(){
-		var conhtml= "<P></p>"; 
-		var imglist = new Array();
-		var namelist = new Array();
-		var chatlist = new Array();
-		var timelist = new Array();
-		
-		<c:forEach items="${userinfos}" var="userinfo">
-			imglist.push("${userinfo.userHeadimageSrc}")
-		</c:forEach>
-		
-		<c:forEach items="${users}" var="user">
-			namelist.push("${user.userName}")
-		</c:forEach>
-			
-		<c:forEach items="${userchat[0]}" var="userchat">
-			chatlist.push("${userchat.messageContent}")
-		</c:forEach>
-			
-		<c:forEach items="${otherchat[0]}" var="otherchat">
-			timelist.push("${otherchat.messageTime}")
-		</c:forEach>
-	 for(var i = 0;i<'${fn:length(users)}';i++){
-		var  contacts = '<li class="user_active1" id="user_active"><div class="user_head"><img src="<%=basePath%>image/'+imglist[i]+'" style="height:40px"/ ></div><div class="user_text" ><p class="user_name" id="user_name">'+namelist[i]+'</p><p class="user_message">'+chatlist[i]+'</p></div><div class="user_time">'+timelist[i]+' </div></li>'
-		conhtml = conhtml += contacts;
+			/* 获取单个用户的聊天记录 */
+			function f(){
 			}
-		$("#user_list").prepend(conhtml); 
-		/* 这里就是聊天记录的内容了 */
-			<%--  var userlist = document.getElementById("user_list");
-			 var userlistli = userlist.getElementsByTagName("li");
-			 
-			 for(var i = 0;i<userlistli.length;i++){
-				 userlistli[i].index=i;
-				 userlistli[i].onclick=function(){
-					 for(var j=0;j<userlistli.length;j++){
-						 userlistli[j].className = "user_active1"
-					 }
-					 this.className = "user_active";
-					var otherchatname = namelist[this.index];
-					var otherchatimg = imglist[this.index];
-					 var chathtml= "<P></p>"; 
-					 var chatlist = new Array();
-					 var userchat= new Array();
-					 var otherchat= new Array();
-					 for(var i=0;i<userchat.length;i++){
-						 userchat2.push(userchat[this.index][i].messageContent);
-						 var a = userchat[this.index][i].messageContent;
-						 var b = userchat[0][0].messageContent;
-						 console.log("你猜："+a);
-						 console.log("我猜："+b);
-					 } 
-					 var  len = '${fn:length(otherchat[1])}'
-						 for(var ij=0;ij<len;ij++){
-						var mechats = '<li class="me"><img src="<%=basePath%>image/${headimgsrc}" title=${user.userName }><span>${otherchat[this.index][ij].messageContent }</span></li>'
-						chatlist.push(mechats);
-						var otherchats='<li class="other"><img src="<%=basePath%>image/${userinfos[0].userHeadimageSrc}"  title=${users[0].userName }><span>${userchat[this.index][ij].messageContent }</span></li>'
-				 		chatlist.push(otherchats); 
-						}
-						for(var i=0;i<otherchat[this.index].length;i++){
-							chathtml = chathtml+=chatlist[i];
-						}
-						$("#chatbox").prepend(chathtml); 
-				 } 
-			 } --%>
-	}
-	//插入自己的聊天记录
-	
-	//插入别人的聊天记录eyy
-			</script>
-		</body>
-		</html>
-	
+	</script>
+
+
+</body>
+</html>

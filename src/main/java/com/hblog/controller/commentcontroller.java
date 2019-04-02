@@ -48,7 +48,6 @@ public Map<String, List<BlogComment>> getcomment(int blogid){
 			String headurl = userinfo.getUserHeadimageSrc();
 			comments.get(i).setUserimg(headurl);
 		}
-		System.err.println(comments);
 		Map<String, List<BlogComment>> map = new HashMap<String, List<BlogComment>>();
 			map.put("comments", comments);
 		return map;
