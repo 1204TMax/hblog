@@ -19,7 +19,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<!-- springboot websocket -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>r05</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.35</version>
+		</dependency>
 		<!-- 后期的事物管理器 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -75,9 +89,9 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-tomcat</artifactId>
-</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
 		<!-- SpringBoot事物管理器 自动配置 DataSourceTransactionManager -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -122,19 +136,19 @@
 			</plugin>
 		</plugins>
 	</build>
-<profiles>
-	<profile>
-		<id>jdk-1.8</id>
-		<activation>
-			<activeByDefault>true</activeByDefault>
-			<jdk>1.8</jdk>
-		</activation>
-		<properties>
-			<maven.compiler.source>1.8</maven.compiler.source>
-			<maven.compiler.target>1.8</maven.compiler.target>
-			<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
-		</properties>
-	</profile>
-</profiles>
+	<profiles>
+		<profile>
+			<id>jdk-1.8</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.8</maven.compiler.source>
+				<maven.compiler.target>1.8</maven.compiler.target>
+				<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>

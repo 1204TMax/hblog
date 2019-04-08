@@ -228,5 +228,10 @@
   <select id="querycontactlist" parameterType="java.lang.Integer" resultMap="BaseResultMap">
   select distinct receive_id from `message` where send_id=#{userid}
   </select>
-  
+  <select id="selectnewchat" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from message  where receive_id = #{userid} AND message_id = (Select MAX(message_id) from message)
+  </select>
+  <select id="countudrtchat" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select COUNT(message_id) from message where receive_id=#{userid}
+  </select>
 </mapper>

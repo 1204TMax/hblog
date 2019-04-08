@@ -2,20 +2,17 @@
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hblog.bean.User;
 import com.hblog.bean.UserExample;
 import com.hblog.bean.Userinfo;
 import com.hblog.bean.UserinfoExample;
+import com.hblog.mapper.MessageMapper;
 import com.hblog.mapper.UserMapper;
 import com.hblog.mapper.UserinfoMapper;
 import com.hblog.service.userservice;
@@ -28,6 +25,8 @@ public class userserviceimpl implements userservice{
 	UserMapper UserMapper;
 	@Autowired
 	UserinfoMapper UserinfoMapper;
+	@Autowired
+	MessageMapper messagemapper;
 	//查询所有用户
 	@Override
 	public List<User> selectalluser(UserExample example) {

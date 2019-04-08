@@ -277,8 +277,9 @@ if(i==0){
 					var url = "../message/getmessagetotwoman?othername="+namelistc[iichat];
 					var otherimg = imglistc[iichat];
 					var othername = namelistc[iichat];
-					getchatdata.abort()
+					/* getchatdata.abort() */
 					f(url,othername,otherimg);
+					h(url,othername,otherimg);
 					choiceuser = namelistc[iichat];
 				 }
 			})(i,chatli[i]);
@@ -295,8 +296,9 @@ if(i==0){
 					var url = "../message/getmessagetotwoman?othername="+namelistf[iifocus];
 					var othername = namelistf[iifocus];
 					var otherimg = imglistf[iifocus];
-					getchatdata.abort()
+					/* getchatdata.abort() */
 					f(url,othername,otherimg);
+					h(url,othername,otherimg);
 					choiceuser = namelistf[iifocus];
 				}
 			 })(i,focusli[i]);
@@ -305,6 +307,10 @@ if(i==0){
 	var getchatdata;
 	/* f方法就是长轮询ajax 获得聊天记录*/
 	function f(url,othername,otherimg){
+		console.log("刷新一次")
+		console.log("1："+url)
+		console.log("2："+othername)
+		console.log("3："+otherimg)
 		 getchatdata = $.ajax({
             dataType:"json",
             type:"POST",
@@ -339,7 +345,7 @@ if(i==0){
             			+"<img src='<%=basePath%>image/"+userimg+"' title='我'><span>你还没有发任何消息呢</span></li>"
             	}
             	chatbox.innerHTML=conhtml
-            	f(url,othername,otherimg)
+            	/* f(url,othername,otherimg) */
             },error:function(jqXHR, error, errorThrown){
                 console.log(jqXHR.status);
             }
@@ -349,25 +355,86 @@ if(i==0){
 	var ig = 0; /* 第二次开始才有中断，这里判断第一次 */
 	function g(tabchoice){
 		if(tabchoice=="chatuser"){
+			for(var iii=0;iii<chatli.length;iii++){
+				 chatli[iii].style.background="#E5E2E2";
+			}
 			chatli[0].style.background="#dedbdb";
 			var url = "../message/getmessagetotwoman?othername="+namelistc[0];
 			var otherimg = imglistc[0];
 			var othername = namelistc[0];
 			ig = ig + 1;
 			if(ig!==1){
-				getchatdata.abort(); /* 要先有才能中断 */
+				/* getchatdata.abort(); */ /* 要先有才能中断 */
 			}
 			f(url,othername,otherimg);
+			h(url,othername,otherimg);
 			choiceuser = namelistc[0];
 		}else{
+			for(var iii=0;iii<focusli.length;iii++){
+				 focusli[iii].style.background="#E5E2E2";
+			}
 			focusli[0].style.background="#dedbdb";
 			var url = "../message/getmessagetotwoman?othername="+namelistf[0];
 			var otherimg = imglistf[0];
 			var othername = namelistf[0];
-			getchatdata.abort();
-			f(url,othername,otherimg);
+			/* getchatdata.abort(); */
+			 f(url,othername,otherimg);
+			h(url,othername,otherimg);
 			choiceuser = namelistf[0];
 		}
+	}
+	function h(url,othername,otherimg){
+		 if('WebSocket' in window){
+			 var urlh = "ws://localhost:9030/websocket/"+othername
+			 console.log("name:"+othername)
+	          websocket = new WebSocket(urlh);
+	          console.log("link success")
+	      }else{
+	          alert('Not support websocket')
+	      }
+	      
+	      //连接发生错误的回调方法
+	      websocket.onerror = function(){
+	    	  console.log("error")
+	      };
+	       
+	      //连接成功建立的回调方法
+	      websocket.onopen = function(event){
+	          console.log("Connection open ..."); 
+	      }
+	       console.log("-----")
+	      //接收到消息的回调方法
+	      websocket.onmessage = function(event){
+	    	   console.log("onmessage")
+	    	   setMessageInnerHTML(event.data);
+	      }
+	       
+	      //连接关闭的回调方法
+	      websocket.onclose = function(){
+	    	  console.log("onclose")
+	      }
+	       
+	      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+	      window.onbeforeunload = function(){
+	          websocket.close();
+	      }
+	       
+	      //刷新聊天记录
+	      function setMessageInnerHTML(innerHTML){
+	    	  console.log("这里是")
+      		f(url,othername,otherimg);
+	      }
+	       
+	      //关闭连接
+	      function closeWebSocket(){
+	          websocket.close();
+	      }
+	       
+	      //发送消息
+	      function send(){
+	          var message = document.getElementById('text').value;
+	          websocket.send(message);
+	      }
 	}
 	a();
 	b();

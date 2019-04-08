@@ -11,8 +11,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -154,4 +156,14 @@ public class messagecontroller {
 		map.put("messages", messages);
 		return map;
 	}
+	/*实时聊天，增加聊天记录*/
+	@RequestMapping("/websocket/{name}")
+    public String webSocket(@PathVariable String name, Model model) {
+        try {
+            model.addAttribute("username", name);
+            return "websocket";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
 }

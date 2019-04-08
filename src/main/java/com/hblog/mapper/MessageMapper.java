@@ -29,4 +29,8 @@ public interface MessageMapper {
     int updateByPrimaryKey(Message record);
     
     List<Message> querycontactlist(@Param("userid") int userid);
+    
+    Message selectnewchat(@Param("userid") int userid);
+    
+    int countudrtchat(@Param("userid") int userid);
 }

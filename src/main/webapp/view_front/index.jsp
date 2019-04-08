@@ -1168,6 +1168,7 @@ li {
 	              var userimg = "<img src='<%=basePath%>image/${userinfolist[9].userHeadimageSrc}' id='prevView' height='12' width='12' style='width: 20px; height: 20px; border-radius: 5px 5px;'>";
 				var commentuser = userimg + "&nbsp"+'${user.userName }'+": &nbsp ";
 				aLi.innerHTML = commentuser + oTextareas[0].value;
+				oTextareas[0].value="";
 				//插入时间
 				/* aSpan.innerHTML=timers+"<a href='javascript:;' title='删除这条信息'>删除</a>"; */
 				aSpan.innerHTML = "  <a href='javascript:;'>删除</a>"
