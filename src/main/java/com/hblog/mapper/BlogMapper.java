@@ -33,5 +33,7 @@ public interface BlogMapper {
     List<Blog> peoplelist(@Param("userName") String userName,@Param("start") int start,@Param("end") int end);
     
     List<Blog> getsamecitylist(@Param("cityname") String userName,@Param("start") int start,@Param("end") int end);
+    
+    List<Blog> gethotblogs();
 
 }

@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hblog.bean.UserExample;
 import com.hblog.bean.Visit;
+import com.hblog.bean.VisitExample;
 import com.hblog.mapper.BlogMapper;
 import com.hblog.mapper.UserMapper;
 import com.hblog.mapper.UserinfoMapper;
@@ -28,5 +30,11 @@ public class visitserviceimpl {
 		String nowvisit2=String.valueOf(nowvisit);
 		visit.setVisit(nowvisit2);
 		VisitMapper.updateByPrimaryKey(visit);
+	}
+	//查询总访问量
+	public int countvisit() {
+		int countvisit = Integer.parseInt(VisitMapper.selectByPrimaryKey(1).getVisit());
+		System.err.println("访问总数量："+countvisit);
+		return countvisit;
 	}
 }

@@ -51,7 +51,7 @@ public class usercontroller {
 	// 查询所有user
 	@RequestMapping("/userlist")
 	public String queryuserlist(Model model) {
-		List<User> users = us.selectalluser(null);
+		List<User> users = usim.selectalluser();
 		model.addAttribute("users", users);
 		return "/list.jsp";
 	}
@@ -111,7 +111,6 @@ public class usercontroller {
 	public String login(User user, Model model, HttpSession session) {
 		String aaa = usim.login(user);
 		if (aaa.length() < 7) {
-			System.err.println(aaa);
 			int userid = Integer.parseInt(aaa);
 			// sesion设置userid，页数，头像路径，user对象，userinfo
 			session.setAttribute("userid", userid);

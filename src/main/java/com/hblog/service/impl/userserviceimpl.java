@@ -2,6 +2,8 @@
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -28,10 +30,10 @@ public class userserviceimpl implements userservice{
 	@Autowired
 	MessageMapper messagemapper;
 	//查询所有用户
-	@Override
-	public List<User> selectalluser(UserExample example) {
+	public List<User> selectalluser() {
 		UserExample userexample = new UserExample();
-		UserExample.Criteria userCriteria=userexample.createCriteria();
+		UserExample.Criteria
+		userCriteria=userexample.createCriteria();
 		userCriteria.andUserIdIsNotNull();
 		return this.UserMapper.selectByExample(userexample);
 	}
@@ -131,6 +133,7 @@ public class userserviceimpl implements userservice{
 		userinfoCriteria=userinfoexample.createCriteria();
 		userinfoCriteria.andUserIdEqualTo(userid);
 		List<Userinfo> userinfos = UserinfoMapper.selectByExample(userinfoexample);
+		System.err.println("err:"+userinfos);
 		int userinfoid = userinfos.get(0).getUserinfoId();
 		return userinfoid;
 	}
@@ -167,5 +170,31 @@ public class userserviceimpl implements userservice{
 		User user = serchuserbyid(userid);
 		user.setUserRegisterTime(time);
 		UserMapper.updateByPrimaryKey(user);
+	}
+	//查询用户总数量
+	public int countuser() {
+		UserExample userexample = new UserExample();
+		UserExample.Criteria
+		userCriteria=userexample.createCriteria();
+		int countuser = (int) UserMapper.countByExample(userexample);
+		System.err.println("用户总数量："+countuser);
+		return countuser;
+	}
+	//根据页码查询user
+	public List<User> serchuserbypage(int page){
+		int head = page;
+		int foot;
+		if(page==5){
+			foot = page*10;
+		}else{
+			foot = page*10-1;
+		}
+		List<User> users = this.UserMapper.serchuserbypage(head,foot);
+		return users;
+	}
+	//删除用户
+	public void deluser(HttpServletRequest request){
+		int userid = Integer.parseInt(request.getParameter("userid"));
+		this.UserMapper.deleteByPrimaryKey(userid);
 	}
 }

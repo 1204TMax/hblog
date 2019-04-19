@@ -312,5 +312,7 @@
   <select id="getsamecitylist" parameterType="com.hblog.bean.Blog" resultMap="BaseResultMap">
    select * from blog where blog_publish_place = #{cityname} order by blog_id desc  limit  #{start},#{end}
   </select>
-  
+   <select id="gethotblogs" parameterType="com.hblog.bean.Blog" resultMap="BaseResultMap">
+	SELECT *  FROM `blog` ORDER BY  blog_praise DESC LIMIT 0,2
+  </select>
 </mapper>

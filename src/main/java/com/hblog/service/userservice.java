@@ -7,7 +7,7 @@ import com.hblog.bean.UserExample;
 
 public interface userservice {
 	
-	List<User> selectalluser(UserExample example);
+	List<User> selectalluser();
 	
 	String insert(User record);
 

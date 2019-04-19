@@ -27,4 +27,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
+    List<User> serchuserbypage(@Param("head") int head,@Param("foot") int foot);
 }

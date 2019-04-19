@@ -26,7 +26,7 @@
 	<div class="container" style=""></div>
 
 	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
-		id="index_top"> <a class="navbar-brand mr-auto mr-lg-0" href="#">
+		id="index_top"> <a class="navbar-brand mr-auto mr-lg-0" href="../blog/getList?page=1">
 		<font style="vertical-align: inherit;"> <font
 			style="vertical-align: inherit;">氢博客</font>
 	</font>
@@ -41,12 +41,12 @@
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="../message/getmessagefromindex"> <font
 					style="vertical-align: inherit;"> <font
-						style="vertical-align: inherit;">聊天</font>
+						style="vertical-align: inherit;">私信</font>
 				</font>
 			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#"> <font
+			<li class="nav-item"><a class="nav-link" href="#" id="samecity"> <font
 					style="vertical-align: inherit;"> <font
-						style="vertical-align: inherit;">浏览更多</font>
+						style="vertical-align: inherit;">同城</font>
 				</font>
 			</a></li>
 			<li class="nav-item"><a class="nav-link"
@@ -82,9 +82,9 @@
 					</a>
 				</div></li>
 		</ul>
-		<form class="form-inline my-2 my-lg-0">
+		<form class="form-inline my-2 my-lg-0" action="<%=basePath %>user/serchuser">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search"
-				aria-label="Search">
+				aria-label="Search" name="">
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
 				<font style="vertical-align: inherit;"><font
 					style="vertical-align: inherit;">搜索</font></font>

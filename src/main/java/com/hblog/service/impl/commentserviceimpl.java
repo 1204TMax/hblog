@@ -15,6 +15,7 @@ import com.hblog.bean.BlogCommentExample;
 import com.hblog.bean.User;
 import com.hblog.bean.Userinfo;
 import com.hblog.mapper.BlogCommentMapper;
+import com.hblog.mapper.VisitMapper;
 import com.hblog.util.gettime;
 
 @Service
@@ -61,5 +62,14 @@ public class commentserviceimpl {
 	}
 	public void delcomment(int commentid){
 		BlogCommentMapper.deleteByPrimaryKey(commentid);
+	}
+	//总评论数
+	public int countcomment() {
+		BlogCommentExample blogcommentexample = new BlogCommentExample();
+		BlogCommentExample.Criteria
+		BlogCommentCriteria=blogcommentexample.createCriteria();
+		int countcomment = (int) BlogCommentMapper.countByExample(blogcommentexample);
+		System.err.println("评论总数量："+countcomment);
+		return countcomment;
 	}
 }

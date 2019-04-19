@@ -33,7 +33,7 @@ li {
 	<div class="container" style=""></div>
 
 	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
-		id="index_top"> <a class="navbar-brand mr-auto mr-lg-0" href="#">
+		id="index_top"> <a class="navbar-brand mr-auto mr-lg-0" href="../blog/getList?page=1">
 		<font style="vertical-align: inherit;"> <font
 			style="vertical-align: inherit;">氢博客</font>
 	</font>
@@ -745,7 +745,7 @@ li {
 						</h4>
 						<p class="card-text">
 							<font style="vertical-align: inherit;"> <font
-								style="vertical-align: inherit;">测试维护ing</font>
+								style="vertical-align: inherit;"><P id="notice">测试维护ing</P></font>
 							</font>
 						</p>
 					</div>
@@ -771,6 +771,21 @@ li {
 	var pinglundiv = document.getElementsByClassName("comment");
 	var pinglundivid = document.getElementById("comment");
 	window.onload = function () {
+		function aa(){
+			$.ajax({
+				 dataType:"json",
+		            type:"POST",
+		            url:"../admin/serchnewnotice",
+		            async: true,
+		            success:function(data){
+		            	var htmla = document.getElementById("notice"); 
+		            	htmla.innerHTML=data.noticeContent;
+		            },error:function(jqXHR, error, errorThrown){
+		                console.log(jqXHR.status);
+		            }
+	        });
+		}
+		aa();
 		for(var pi= 0 ; pi<3;pi++){
 			for(var i = 0;i<pinglundiv.length;i++){
 				pinglundiv[i].parentNode.removeChild(pinglundiv[i]);
@@ -783,7 +798,7 @@ li {
 	    var hiddendiv = 110 - pagesize;
 	    var a = document.getElementById("cardform")
 	    var b = a.getElementsByTagName("div");
-	    for (var i = 0; i < pagesize; i++) {
+	    for (var i = 0; i < b.length; i++) {
 	        b[i].style.opacity = "100";
 	    }
 	    var it1 = document.getElementById('it1');
@@ -1110,27 +1125,32 @@ li {
 		            type:"POST",
 		            url:url,
 		            success:function(data){
+		            	console.log("1："+data);
 		            	if(lis.length!==0){
+		            		console.log("2:"+lis.length);
 		            		for(var aisd = 0;aisd<100;aisd++){
 	        	        	for(var ilis=0;ilis<lis.length;ilis++){
-	        	        		console.log(ilis)
+	        	        		console.log("ilis:"+ilis)
 	        	        		 oUls[0].removeChild(lis[ilis]);
-	        	        	}
+	        	        	} 
 	        	        }
 		            	}
 		                var arr=data.comments;
+		                var bhtml = "";
+		                var conhtml = "";
 		                 for(var i=0;i<data.comments.length;i++){
 		                    var username=arr[i].username;
 		                    var commentcontent=arr[i].blogCommentContent;
-		                    var headimg=arr[i].userimg;
+		                    var headimg=arr[i].userimg; 
 		                    var aLi = document.createElement("li");
 			                var aSpan = document.createElement("span");
 			                var userimg = "<img src=<%=basePath%>image/" + headimg + " id='prevView' height='12' width='12' style='width: 20px; height: 20px; border-radius: 5px 5px;'>";
 							var commentuser = userimg+"&nbsp&nbsp" +username+"&nbsp:&nbsp&nbsp";
-							aLi.innerHTML = commentuser + oTextareas[0].value;
+							aLi.innerHTML = commentuser + commentcontent;
 									oUls[0].appendChild(aLi);
 									aLi.appendChild(aSpan);
-									oTextareas[0].value = commentcontent;
+									/* oTextareas[0].value = commentcontent; */
+									oTextareas[0].value = "";
 		                }  
 		            },error:function(data){
 		                alert(请重试);

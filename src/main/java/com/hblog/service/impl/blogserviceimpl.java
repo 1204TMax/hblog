@@ -206,4 +206,16 @@ public void minushert(int blogid){
 	blog.setBlogPraise(nowhert);
 	this.BlogMapper.updateByPrimaryKey(blog);
 }
+//查询点赞最高的2条Blog
+public List<Blog> gethotblog(){
+	List<Blog> hotblogs = this.BlogMapper.gethotblogs();
+	return hotblogs;
+}
+//根据页码查询blog(后台)
+	public List<Blog> serchblogbypage(int page){
+		int start = page;
+		int end=page*10;
+		List<Blog> blogs = this.BlogMapper.getlist(start,end);
+		return blogs;
+	}
 }
