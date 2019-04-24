@@ -10,7 +10,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  */
 @SpringBootApplication
 public class MyApplication{
-	
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(MyApplication.class);
 		app.run(args); //启动  	}
